@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import {useState} from "react";
 import './App.css';
 
@@ -6,6 +5,7 @@ function App() {
     const [guesses, setGuesses] = useState([]);
     const [guess, setGuess] = useState("");
     const [secret, setSecret] = useState(generateSecret);
+    const [hints, setHints] = useState([]);
 
     // returns a 4 digit randomized secret number
     function generateSecret() {
@@ -36,15 +36,16 @@ function App() {
 
     // checks if the guess is a unique 4-digit integer
     // and returns true if so and false otherwise
-    function isValidInput() {
-        let temp = new Set(guess.split(""));
+    function isValidInput(input) {
+        let temp = new Set(input.split(""));
         if (temp.size < 4) {
             console.log("size is less than 4")
             return false;
         }
         for (let value of temp) {
-            if (isNaN(parseInt(value))) {
-                console.log("value is not a number")
+            let iValue = parseInt(value);
+            if (isNaN(iValue) || iValue < 1) {
+                console.log("value is not a 1-9 number")
                 return false;
             }
         }
@@ -53,18 +54,35 @@ function App() {
 
     // adds current guess (value of the textfield to the list
     // of all guesses
-    // TODO: compare with the secret and check if game is over
+    // TODO: implement table like behavior for displaying guesses and
     function makeGuess() {
         setGuesses(guesses.concat(guess));
+        setHints(hints.concat(checkSecret(secret, guess)));
+    }
+
+    // returns a string representing the positions of
+    // "bulls" and "cows" (or "As" and "Bs")
+    // TODO: implement behavior
+    function checkSecret(secret, guess) {
+        let res = "";
+        let numA = 0, numB = 0;
+        if (secret.length != guess.length
+        || secret.length != 4) {
+            throw "Bad secret and/or guess";
+        }
+        for (let i = 0; i < 4; i++) {
+
+        }
+        return res;
     }
 
     // called when a new key is pressed
     function keypress(ev) {
         if (ev.key === "Enter") {
-            if (isValidInput()) {
+            if (isValidInput(guess)) {
                 makeGuess();
             } else {
-                alert("A guess must be a 4-digit unique integer. Guess: " + guess);
+                alert("A guess must be a 4-digit unique integer (1-9)");
             }
         }
     }
