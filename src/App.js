@@ -24,20 +24,14 @@ function App() {
         })(temp);
     }
 
+    // called when the textfield is changed
     function updateGuess(ev) {
-        let key = ev.key;
-        let fieldLength = ev.target.value.length;
-        if (key === "Enter") {
-            if (isValidInput()) {
-                makeGuess();
-            } else {
-                alert("A guess must be a 4-digit unique integer");
-            }
-        } else {
-            if (fieldLength <= 4) {
-                setGuess(guess.concat(key));
-            }
+        let text = ev.target.value;
+        let fieldLength = text.length;
+        if (fieldLength > 4) {
+            text = text.substr(0, 4);
         }
+        setGuess(text);
     }
 
     // checks if the guess is a unique 4-digit integer
@@ -45,30 +39,50 @@ function App() {
     function isValidInput() {
         let temp = new Set(guess.split(""));
         if (temp.size < 4) {
+            console.log("size is less than 4")
             return false;
         }
         for (let value of temp) {
-            if (!isNaN(parseInt(value))) {
+            if (isNaN(parseInt(value))) {
+                console.log("value is not a number")
                 return false;
             }
         }
         return true;
     }
 
+    // adds current guess (value of the textfield to the list
+    // of all guesses
+    // TODO: compare with the secret and check if game is over
     function makeGuess() {
         setGuesses(guesses.concat(guess));
     }
 
+    // called when a new key is pressed
+    function keypress(ev) {
+        if (ev.key === "Enter") {
+            if (isValidInput()) {
+                makeGuess();
+            } else {
+                alert("A guess must be a 4-digit unique integer. Guess: " + guess);
+            }
+        }
+    }
+
+    // called when reset button is clicked
     function reset() {
         setGuesses([]);
         setGuess("");
+        setSecret(generateSecret());
     }
 
     return (
         <div className="App">
             <p>
                 <input type="text"
-                       onKeyPress={updateGuess}
+                       onChange={updateGuess}
+                       value={guess}
+                       onKeyPress={keypress}
                 />
             </p>
             <p>
