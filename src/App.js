@@ -1,4 +1,5 @@
 import {useState} from "react";
+import "milligram";
 import './App.css';
 
 // called when the game is in progress
@@ -102,28 +103,166 @@ function App() {
     }
 
     return (
+        <div>
+            <div className="controls">
+                <div className="row">
+                    <div className="column">
+                        <p>
+                            <input type="text"
+                                   onChange={updateGuess}
+                                   value={guess}
+                                   onKeyPress={keypress}
+                            />
+                        </p>
+                    </div>
+                    <div className="column">
+                        <p>
+                            <button onClick={makeGuess}>Guess</button>
+                            <button onClick={reset}>Reset</button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <ResultTable />
 
-        <div className="App">
-            <p>
-                <input type="text"
-                       onChange={updateGuess}
-                       value={guess}
-                       onKeyPress={keypress}
-                />
-            </p>
-            <p>
-                <button onClick={makeGuess}>Guess</button>
-                <button onClick={reset}>Reset</button>
-            </p>
-            <p>
-                Secret: {secret}
-            </p>
-            <p>
-                Guesses: {guesses.join("\n")}
-            </p>
-            <p>
-                Hints: {hints.join("\n")}
-            </p>
+            <Other secret={secret} guesses={guesses} hints={hints} />
+
+        </div>
+    );
+}
+
+function ResultTable() {
+    return (
+        <div className="results">
+            <div className="row">
+                <div className="column">
+                    <div className="colHeader">
+                        <p>Num guesses</p>
+                    </div>
+                </div>
+                <div className="column">
+                    <div className="colHeader">
+                        <p>Guess</p>
+                    </div>
+                </div>
+                <div className="column">
+                    <div className="colHeader">
+                        <p>Hint</p>
+                    </div>
+                </div>
+            </div>
+            <div className="row">
+                <div className="column">
+                    <p>1</p>
+                </div>
+                <div className="column">
+                    <p></p>
+                </div>
+                <div className="column">
+                    <p></p>
+                </div>
+            </div>
+            <div className="row">
+                <div className="column">
+                    <p>2</p>
+                </div>
+                <div className="column">
+                    <p></p>
+                </div>
+                <div className="column">
+                    <p></p>
+                </div>
+            </div>
+            <div className="row">
+                <div className="column">
+                    <p>3</p>
+                </div>
+                <div className="column">
+                    <p></p>
+                </div>
+                <div className="column">
+                    <p></p>
+                </div>
+            </div>
+            <div className="row">
+                <div className="column">
+                    <p>4</p>
+                </div>
+                <div className="column">
+                    <p></p>
+                </div>
+                <div className="column">
+                    <p></p>
+                </div>
+            </div>
+            <div className="row">
+                <div className="column">
+                    <p>5</p>
+                </div>
+                <div className="column">
+                    <p></p>
+                </div>
+                <div className="column">
+                    <p></p>
+                </div>
+            </div>
+            <div className="row">
+                <div className="column">
+                    <p>6</p>
+                </div>
+                <div className="column">
+                    <p></p>
+                </div>
+                <div className="column">
+                    <p></p>
+                </div>
+            </div>
+            <div className="row">
+                <div className="column">
+                    <p>7</p>
+                </div>
+                <div className="column">
+                    <p></p>
+                </div>
+                <div className="column">
+                    <p></p>
+                </div>
+            </div>
+            <div className="row">
+                <div className="column">
+                    <p>8</p>
+                </div>
+                <div className="column">
+                    <p></p>
+                </div>
+                <div className="column">
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+function Other({secret, guesses, hints}) {
+    return (
+        <div className="other">
+            <div className="row">
+                <div className="column">
+                    <p>
+                        Secret: {secret}
+                    </p>
+                </div>
+                <div className="column">
+                    <p>
+                        Guesses: {guesses.join("\n")}
+                    </p>
+                </div>
+                <div className="column">
+                    <p>
+                        Hints: {hints.join("\n")}
+                    </p>
+                </div>
+            </div>
         </div>
     );
 }
