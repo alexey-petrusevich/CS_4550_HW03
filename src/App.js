@@ -1,24 +1,28 @@
 import {useState} from "react";
 import './App.css';
 
+// called when the game is in progress
 function App() {
     const [guesses, setGuesses] = useState([]);
     const [guess, setGuess] = useState("");
-    const [secret, setSecret] = useState(generateSecret);
+    const [secret, setSecret] = useState(generateSecret());
     const [hints, setHints] = useState([]);
 
     // returns a 4 digit randomized secret number
+    // TODO: office hours
     function generateSecret() {
+        console.log("generate secret called");
         let temp = new Set();
         while (temp.size < 4) {
             let newNum = Math.ceil(Math.random() * 9);
             temp.add(newNum);
         }
-
         return ((vars) => {
             let str = "";
             for (let c of vars) {
-                str.concat(c.toString());
+                console.log("concatenating: " + c.toString());
+                str = str.concat(c.toString());
+                console.log("str: " + str);
             }
             return str;
         })(temp);
@@ -57,23 +61,25 @@ function App() {
     // TODO: implement table like behavior for displaying guesses and
     function makeGuess() {
         setGuesses(guesses.concat(guess));
-        setHints(hints.concat(checkSecret(secret, guess)));
+        setHints(hints.concat(getHint(secret, guess)));
     }
 
     // returns a string representing the positions of
     // "bulls" and "cows" (or "As" and "Bs")
-    // TODO: implement behavior
-    function checkSecret(secret, guess) {
-        let res = "";
-        let numA = 0, numB = 0;
-        if (secret.length != guess.length
-        || secret.length != 4) {
+    function getHint(secret, guess) {
+        if (secret.length !== guess.length
+            || secret.length !== 4) {
             throw "Bad secret and/or guess";
         }
+        let numA = 0, numB = 0;
         for (let i = 0; i < 4; i++) {
-
+            if (secret[i] === guess[i]) {
+                numA++;
+            } else if (secret.includes(guess[i])) {
+                numB++;
+            }
         }
-        return res;
+        return numA + "A" + numB + "B";
     }
 
     // called when a new key is pressed
@@ -91,10 +97,12 @@ function App() {
     function reset() {
         setGuesses([]);
         setGuess("");
-        setSecret(generateSecret());
+        setSecret(generateSecret);
+        console.log("reset called");
     }
 
     return (
+
         <div className="App">
             <p>
                 <input type="text"
@@ -108,7 +116,13 @@ function App() {
                 <button onClick={reset}>Reset</button>
             </p>
             <p>
+                Secret: {secret}
+            </p>
+            <p>
                 Guesses: {guesses.join("\n")}
+            </p>
+            <p>
+                Hints: {hints.join("\n")}
             </p>
         </div>
     );
