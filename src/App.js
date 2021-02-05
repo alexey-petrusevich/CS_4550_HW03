@@ -3,6 +3,15 @@ import "milligram";
 import './App.css';
 import {generateSecret, isValidInput, getHint, hasGameEnded} from "./game";
 
+/*
+NOTE (regarding plagiarism):
+Lecture notes on React (4 and 5) were used in creating this assignment.
+Specifically:
+- Hooks via useState;
+- Event handlers (named the same or similarly);
+- file game.js, which contains helper functions;
+- notions of "guesses" similar to "guesses" in hangman;
+ */
 
 function App() {
     const [guesses, setGuesses] = useState([]);
