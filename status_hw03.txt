@@ -1,0 +1,30 @@
+Please fill in answers to the questions below:
+
+
+1. What's your name?
+Alexey Petrusevich
+
+
+2. What hostname did you deploy to?
+http://quickjohnny.art/
+
+
+3. Which parts of this assignment did you have trouble with, if any?
+Hooks and useState() at first, but once I got a hang of it, it was
+quite straight forward.
+
+
+4. What external libraries did you use? For what?
+"milligram" for better visual representation and grid
+functionality
+
+
+And here's a list of tasks for grading comments. Just leave this here:
+ - Task 1
+ - Task 2
+ - Task 3
+ - Task 4
+ - Task 5
+ - Task 6
+ - Task 7
+ - Task 8
